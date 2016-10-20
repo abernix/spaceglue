@@ -1,21 +1,21 @@
 #!/bin/sh
 
-set -e
 set -x
+set -e
 
-export NODE_VERSION=${NODE_VERSION:-4.6.1}
+: ${NODE_VERSION?"NODE_VERSION has not been set."}
 
-./build_it.sh
+my_dir=`dirname $0`
+root_dir="$my_dir/.."
 
-./test_meteor_app.sh
-./test_meteor_app_with_devbuild.sh
+${root_dir}/build_it.sh
 
-./test_bundle_local_mount.sh
+${my_dir}/test_meteor_app.sh
 
-# These use BUNDLE_URL from S3
-./test_bundle_web.sh
-./test_binary_build_on_base.sh
-./test_binary_build_on_bin_build.sh
+${my_dir}/test_bundle_local_mount.sh
 
-./test_phantomjs.sh
-./test_no_app.sh
+# This uses BUNDLE_URL from S3
+${my_dir}/test_bundle_web.sh
+
+${my_dir}/test_phantomjs.sh
+${my_dir}/test_no_app.sh

@@ -1,28 +1,27 @@
 #!/bin/sh
-
-: ${NODE_VERSION?"NODE_VERSION has not been set."}
-
 set -x
+set -e
+my_dir=`dirname $0`
+. ${my_dir}/lib.sh
 
-function clean() {
-  docker rm -f no_app
+base_app_name="meteord-test-no_app"
+
+clean() {
+  docker rm -f "${base_app_name}" 2> /dev/null || true
 }
+
+trap "echo Failed: To check whether actual meteor bundle exists or not" EXIT
 
 cd /tmp
 clean
 
 docker run -d \
-    --name no_app \
+    --name "${base_app_name}" \
     -e ROOT_URL=http://no_app \
     -p 9090:80 \
-    "abernix/meteord:base-node-${NODE_VERSION}"
+    "abernix/meteord:base"
 
-sleep 10
+docker_logs_has "${base_app_name}" "You don't have an meteor app"
 
-appContent=`docker logs no_app`
+trap - EXIT
 clean
-
-if [[ $appContent != *"You don't have an meteor app"* ]]; then
-  echo "Failed: To check whether actual meteor bundle exists or not"
-  exit 1
-fi

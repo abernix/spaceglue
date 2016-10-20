@@ -1,25 +1,27 @@
 #!/bin/sh
-
-: ${NODE_VERSION?"NODE_VERSION has not been set."}
-
 set -x
+set -e
+my_dir=`dirname $0`
+. ${my_dir}/lib.sh
 
-function clean() {
-  docker rm -f phantomjs_check
+base_app_name="meteord-test-phantomjs_check"
+
+clean() {
+  docker rm -f "${base_app_name}" 2> /dev/null || true
 }
 
+trap "echo Failed: Phantomjs Check" EXIT
+
 clean
+
 docker run  \
-    --name phantomjs_check \
-    --entrypoint="/bin/sh" \
-    "abernix/meteord:base-node-${NODE_VERSION}" -c 'phantomjs -h'
+    --name "${base_app_name}" \
+    --entrypoint="phantomjs -h" \
+    "abernix/meteord:base"
 
 sleep 5
 
-appContent=`docker logs phantomjs_check`
-clean
+docker_logs_has "${base_app_name}" "GhostDriver"
 
-if [[ $appContent != *"GhostDriver"* ]]; then
-  echo "Failed: Phantomjs Check"
-  exit 1
-fi
+trap - EXIT
+clean

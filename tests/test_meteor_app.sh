@@ -1,35 +1,44 @@
 #!/bin/sh
-
-: ${NODE_VERSION?"NODE_VERSION has not been set."}
-
 set -x
+set -e
+my_dir=`dirname $0`
+. ${my_dir}/lib.sh
 
-function clean() {
-  docker rm -f meteor-app
-  docker rmi -f meteor-app-image
-  rm -rf hello
+base_app_name="meteord-test-app"
+
+clean() {
+  docker rm -f "${base_app_name}" 2> /dev/null || true
+  docker rmi -f "${base_app_image_name}" 2> /dev/null || true
+  rm -rf ${base_app_name} || true
 }
+
+trap "echo Failed: Meteor app" EXIT
+
+base_app_image_name="${base_app_name}-image"
 
 cd /tmp
 clean
 
-meteor create hello
-cd hello
-echo "FROM abernix/meteord:onbuild-node-${NODE_VERSION}" > Dockerfile
+meteor create "${base_app_name}"
+cd "${base_app_name}"
 
-docker build -t meteor-app-image ./
+echo "FROM abernix/meteord:base" > Dockerfile
+
+add_watch_token "server/main.js"
+
+test_root_url_hostname="yourapp_dot_com"
+
+docker build -t "${base_app_image_name}" ./
 docker run -d \
-    --name meteor-app \
-    -e ROOT_URL=http://yourapp_dot_com \
+    --name "${base_app_name}" \
+    -e ROOT_URL=http://$test_root_url_hostname \
     -p 8080:80 \
-    meteor-app-image
+    "${base_app_image_name}"
 
-sleep 50
+watch_docker_logs_for_token "${base_app_name}" || true
+sleep 1
 
-appContent=`curl http://localhost:8080`
+check_server_for "8080" "${test_root_url_hostname}" || true
+
+trap - EXIT
 clean
-
-if [[ $appContent != *"yourapp_dot_com"* ]]; then
-  echo "Failed: Meteor app"
-  exit 1
-fi
