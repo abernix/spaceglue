@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+
+/*
+  Exit Codes:
+   - 30: unknown if correct version
+   - 31: wrong version
+   - 0: correct version!
+   - anything else, unknown!
+*/
+
+var meteorVersion = process.argv[2];
+
+if (! meteorVersion) {
+  console.log("Pass a full Meteor version (e.g. METEOR@1.4.2)")
+  process.exit(1);
+}
+
+var mapPath = require("path").join(__dirname, "version-map.js");
+
+
+function showAvailableVersionsLink() {
+  console.log("Check which Docker images are available at:");
+  console.log();
+  console.log("  https://hub.docker.com/r/abernix/meteord/tags/");
+  console.log();
+  console.log("and if you need support for this version, open an issue here:");
+  console.log();
+  console.log("  https://github.com/abernix/meteord/issues");
+}
+
+if (require("fs").existsSync(mapPath)) {
+  var versionMap = require(mapPath);
+
+  if (versionMap && versionMap[meteorVersion]) {
+    var versionInfo = versionMap[meteorVersion];
+    if (process.versions.node === versionInfo.node) {
+      console.log(
+        "Congrats, you're using the correct version of Node (%s) for %s",
+        versionInfo.node, meteorVersion
+      );
+      process.exit(0);
+    } else {
+      console.log(
+        "You're using the incorrect version of Node for %s!", meteorVersion);
+      console.log("This Meteor used Node %s but %s is installed",
+        versionInfo.node, process.versions.node);
+      console.log("You probably just need to build with a different Docker",
+        "image.");
+      console.log();
+      showAvailableVersionsLink();
+      process.exit(31);
+    }
+  }
+}
+
+console.log(
+  "Hmm... We're not sure which Node is compatible with %s!",
+  meteorVersion
+);
+console.log();
+console.log(
+  "It's possible that this is a new (or very old) version of Meteor, but you"
+);
+console.log("should make sure you're using a Docker image that's compatible");
+console.log("with your version of Meteor!");
+console.log();
+showAvailableVersionsLink();
+process.exit(30)

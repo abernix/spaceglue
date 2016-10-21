@@ -6,24 +6,17 @@ machine:
     - docker
   environment:
     NODE_VERSION: 4.6.1
+    METEOR_PRETTY_OUTPUT: 0
+    METEOR_WAREHOUSE_URLBASE: https://d3fm2vapipm3k9.cloudfront.net
 
 dependencies:
   override:
     - test -f $HOME/.meteor/meteor || (curl https://install.meteor.com | sh)
     - sudo ln -s $HOME/.meteor/meteor /usr/bin/meteor
-    - ./build_it.sh
   cache_directories:
     - ../.meteor
 
 test:
   override:
-    - sh:
+    - ./dev/run_circleci_tests.sh:
         parallel: true
-        files:
-          # These are taken directly from tests/run_tests.sh
-          # but provide parallelism.
-          - tests/test_meteor_app.sh
-          - tests/test_bundle_local_mount.sh
-          - tests/test_bundle_web.sh  # This uses BUNDLE_URL
-          - tests/test_phantomjs.sh
-          - tests/test_no_app.sh

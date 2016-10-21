@@ -1,0 +1,2 @@
+deb http://cloudfront.debian.net/debian/ stable main contrib
+deb http://cloudfront.debian.net/debian-security/ stable/updates main contrib

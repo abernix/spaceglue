@@ -4,6 +4,8 @@ set -e
 my_dir=`dirname $0`
 . ${my_dir}/lib.sh
 
+check_images_set
+
 base_app_name="meteord-test-phantomjs_check"
 
 clean() {
@@ -16,8 +18,9 @@ clean
 
 docker run  \
     --name "${base_app_name}" \
-    --entrypoint="phantomjs -h" \
-    "abernix/meteord:base"
+    --entrypoint=phantomjs \
+    "${DOCKER_IMAGE_NAME_BASE}" \
+    --help
 
 sleep 5
 
