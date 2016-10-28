@@ -58,4 +58,4 @@ echo "=> Executing NPM install within Bundle"
 (cd programs/server && npm install --unsafe-perm)
 
 echo "=> Starting meteor app on port:$PORT"
-node main.js
+node $NODE_OPTIONS main.js
