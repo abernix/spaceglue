@@ -18,5 +18,5 @@ dependencies:
 
 test:
   override:
-    - ./dev/run_circleci_tests.sh:
+    - ./admin/run_circleci_tests.sh:
         parallel: true

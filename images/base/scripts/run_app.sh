@@ -1,20 +1,29 @@
 #!/bin/sh
 
 set -e
-set -x
 my_dir=`dirname $0`
 path=`pwd`
 
 if [ -d /bundle ]; then
-  cd /bundle
-  tar -xz --no-same-owner --file *.tar.gz
+  echo "=> Found /bundle"
+  tar -xvz -C $HOME --no-same-owner --file /bundle/*.tar.gz
+  cd $HOME/bundle
+elif [ -d $HOME/bundle ]; then
+  echo "=> Found $HOME/bundle"
+  cd $HOME/bundle
+  tar -xvz --no-same-owner --file $HOME/bundle/*.tar.gz
   cd bundle/
 elif [ -n "$BUNDLE_URL" ]; then
-  cd /tmp
+  echo "=> BUNDLE_URL is set"
+  cd $HOME/
   curl -L -o bundle.tar.gz $BUNDLE_URL
   tar -xz --no-same-owner --file bundle.tar.gz
   cd bundle/
+elif [ -d $HOME/built_app ]; then
+  echo "=> Found $HOME/built_app"
+  cd $HOME/built_app
 elif [ -d /built_app ]; then
+  echo "=> Found /built_app"
   cd /built_app
 else
   echo "=> You don't have an meteor app to run in this image."
@@ -52,7 +61,7 @@ if [ -n "$DELAY" ]; then
 fi
 
 # Honour already existing PORT setup
-export PORT=${PORT:-80}
+export PORT=${PORT:-3000}
 
 echo "=> Executing NPM install within Bundle"
 (cd programs/server && npm install --unsafe-perm)

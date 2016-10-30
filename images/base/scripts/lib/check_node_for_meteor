@@ -21,7 +21,7 @@ var mapPath = require("path").join(__dirname, "version-map.js");
 function showAvailableVersionsLink() {
   console.log("Check which Docker images are available at:");
   console.log();
-  console.log("  https://hub.docker.com/r/abernix/meteord/tags/");
+  console.log("  https://hub.docker.com/r/abernix/spaceglue/tags/");
   console.log();
   console.log("and if you need support for this version, open an issue here:");
   console.log();

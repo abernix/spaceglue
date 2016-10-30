@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -e # Exit on any bad exit status
-set -x # Print each command
 my_dir=`dirname $0`
 
 # Shouldn't matter, but just in case.
@@ -11,13 +10,13 @@ export METEOR_NO_RELEASE_CHECK=1
 : ${METEOR_WAREHOUSE_URLBASE:="https://d3fm2vapipm3k9.cloudfront.net"}
 export METEOR_WAREHOUSE_URLBASE
 
-copied_app_path=/copied-app
-bundle_dir=/tmp/bundle-dir
+copied_app_path=$HOME/copied-app
+build_dir=$HOME/.build
 
 # sometimes, directly copied folder cause some weird issues
 # this fixes that
 echo "=> Copying the app"
-cp -R /app $copied_app_path
+cp -R $HOME/app $copied_app_path
 cd $copied_app_path
 
 # Function which makes a Meteor version number comparable.
@@ -75,56 +74,44 @@ if true; then
 
   echo "=> Running the ${METEOR_RELEASE} installer..."
   cat /tmp/install_meteor.sh | sed s/--progress-bar/-sL/g | /bin/sh
-
-else
-  ## For future use:
-  ## ....to symlink a cached Meteor's `meteor` execuatable
-  METEOR_SYMLINK_TARGET="$(readlink "$HOME/.meteor/meteor")"
-  METEOR_TOOL_DIRECTORY="$(dirname "$METEOR_SYMLINK_TARGET")"
-  LAUNCHER="$HOME/.meteor/$METEOR_TOOL_DIRECTORY/scripts/admin/launch-meteor"
-  echo "Making 'meteor' Symlink from ${LAUNCHER}"
-  ln $LAUNCHER -sf /usr/local/bin/meteor
 fi
 
-unsafe_perm_flag=""
-if [ $(cver "${METEOR_RELEASE}") -eq $(cver "1.4.2") ]; then
-  # If the primary release requires the --unsafe-perm flag, let's pass it.
-  unsafe_perm_flag="--unsafe-perm"
+# Useful for various hot-patches/optimizations
+meteor_bin="$HOME/.meteor/meteor"
+meteor_bin_symlink="$(readlink $meteor_bin)"
+meteor_tool_dir="$(dirname "${meteor_bin_symlink}")"
 
-  echo "=> Hot-Patching 1.4.2 release to not pass --unsafe-perm to springboarded version..."
-  perl -0pi.bak \
-    -e 's/(^\h+var newArgv.*?$)/$1\n\n  newArgv = _.filter(newArgv, function (arg) { return arg !== "--unsafe-perm"; });/ms' \
-    $HOME/.meteor/$METEOR_TOOL_DIRECTORY/tools/cli/main.js
-  echo "...done"
-fi
+## For future use:
+## ....to symlink a cached Meteor's `meteor` execuatable
+#LAUNCHER="$HOME/.meteor/${meteor_tool_dir}/scripts/admin/launch-meteor"
+#echo "Making 'meteor' Symlink from ${LAUNCHER}"
+#ln $LAUNCHER -sf /usr/local/bin/meteor
 
 echo "=> App Meteor Version"
 meteor_version_app=$(cat .meteor/release)
 echo "  > ${meteor_version_app}"
 
 echo "=> Executing NPM install --production"
-meteor npm install --production 2>&1 > /dev/null
+$meteor_bin npm install --production 2>&1 > /dev/null
 
 echo "=> Executing Meteor Build..."
 
-METEOR_DEBUG_SPRINGBOARD=t \
-  meteor build \
-  ${unsafe_perm_flag} \
-  --directory $bundle_dir \
-  --server=http://localhost:3000
+$meteor_bin build \
+  --directory $build_dir
 
 echo "=> Executing NPM install within Bundle"
-(cd ${bundle_dir}/bundle/programs/server/ && npm install --unsafe-perm)
+(cd ${build_dir}/bundle/programs/server/ && npm install --unsafe-perm)
 
 echo "=> Moving bundle"
-mv ${bundle_dir}/bundle /built_app
+mv ${build_dir}/bundle $HOME/built_app
 
 echo "=> Cleaning up"
 # cleanup
 echo " => copied_app_path"
 rm -rf $copied_app_path
-echo " => bundle_dir"
-rm -rf ${bundle_dir}
+echo " => build_dir"
+rm -rf ${build_dir}
 echo " => .meteor"
 rm -rf ~/.meteor
-rm /usr/local/bin/meteor
+
+set +e
