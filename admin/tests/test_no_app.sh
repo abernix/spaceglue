@@ -11,7 +11,7 @@ clean() {
   docker rm -f "${base_app_name}" 2> /dev/null || true
 }
 
-trap "docker logs ${base_app_name} || true; echo Failed: Missing Bundle Scenario && exit 1" EXIT
+trap "echo Failed: Missing Bundle Scenario && exit 1" EXIT
 
 cd /tmp
 clean
