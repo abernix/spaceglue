@@ -31,27 +31,17 @@ meteor build \
   "../${base_app_name}-bundle" \
   2>&1 > /dev/null
 
-docker_run_test () {
-  bundle_mount_point=$1
+docker run -d \
+    --name "${base_app_name}" \
+    -e ROOT_URL=http://$test_root_url_hostname \
+    -v "/tmp/${base_app_name}-bundle:/bundle" \
+    -p 63836:3000 \
+    "${DOCKER_IMAGE_NAME_BUILDDEPS}"
 
-  docker run -d \
-      --name "${base_app_name}" \
-      -e ROOT_URL=http://$test_root_url_hostname \
-      -v "/tmp/${base_app_name}-bundle:${bundle_mount_point}" \
-      -p 63836:3000 \
-      "${DOCKER_IMAGE_NAME_BUILDDEPS}"
-
-  watch_docker_logs_for_token "${base_app_name}"
-  ! docker_logs_has "${base_app_name}" "you are using a pure-JavaScript"
-  docker_logs_has_bcrypt_token "${base_app_name}"
-  check_server_for "63836" "${test_root_url_hostname}"
-
-  # Get ready to do it again.
-  docker rm -f "${base_app_name}" 2> /dev/null || true
-}
-
-# Test with the bundle mounted at the old /bundle location
-docker_run_test "/bundle"
+watch_docker_logs_for_token "${base_app_name}"
+! docker_logs_has "${base_app_name}" "you are using a pure-JavaScript"
+docker_logs_has_bcrypt_token "${base_app_name}"
+check_server_for "63836" "${test_root_url_hostname}"
 
 trap - EXIT
 clean
