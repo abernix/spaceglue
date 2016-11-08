@@ -52,12 +52,6 @@ COPY scripts .
 # Set permissions before we leave.
 RUN chown -R node:node /home/node/
 
-# If we're using the old bundle directory, set the permissions for it.
-RUN test -d /bundle && \
-  chmod 700 /bundle \
-  chown -Rh node:node /bundle \
-  || true
-
 # If we're using the old built_app directory, set the permissions for it.
 RUN test -d /built_app && \
   chmod 700 /built_app && \
