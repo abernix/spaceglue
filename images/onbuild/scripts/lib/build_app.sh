@@ -15,6 +15,12 @@ build_dir=$HOME/.build
 echo "=> Copying the app"
 cd $HOME/app
 
+# I don't have a minimal reproduction at the moment, but this could be legit
+# be an issue for isopacks which are built on one platform and built/linked
+# on another.  See meteor/meteor#7852.
+test -d packages && find packages/ -type d -name '.npm' -exec rm -rf {} \; \
+  || true # Always succeed.
+
 # Function which makes a Meteor version number comparable.
 cver () {
   echo $1 | perl -n \
