@@ -23,9 +23,7 @@ docker run  \
     "${DOCKER_IMAGE_NAME_ONBUILD}" \
     --help
 
-sleep 1
-
-docker_logs_has "${base_app_name}" "GhostDriver"
+watch_docker_logs_for "${base_app_name}" "GhostDriver"
 
 trap - EXIT
 clean
