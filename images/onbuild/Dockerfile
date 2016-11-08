@@ -11,7 +11,9 @@ RUN ["npm", "install", "--global", "node-gyp"]
 RUN ["npm", "install", "--global", "phantomjs@1"]
 USER node
 
+ONBUILD USER root
 ONBUILD COPY ./ /home/node/app
+ONBUILD RUN ["chown", "-R", "node:node", "/home/node/app"]
 
 ONBUILD USER node
 ONBUILD RUN lib/build_app.sh

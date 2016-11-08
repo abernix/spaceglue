@@ -10,14 +10,10 @@ export METEOR_NO_RELEASE_CHECK=1
 : ${METEOR_WAREHOUSE_URLBASE:="https://d3fm2vapipm3k9.cloudfront.net"}
 export METEOR_WAREHOUSE_URLBASE
 
-copied_app_path=$HOME/copied-app
 build_dir=$HOME/.build
 
-# sometimes, directly copied folder cause some weird issues
-# this fixes that
 echo "=> Copying the app"
-cp -R $HOME/app $copied_app_path
-cd $copied_app_path
+cd $HOME/app
 
 # Function which makes a Meteor version number comparable.
 cver () {
@@ -107,8 +103,8 @@ mv ${build_dir}/bundle $HOME/built_app
 
 echo "=> Cleaning up"
 # cleanup
-echo " => copied_app_path"
-rm -rf $copied_app_path
+echo "  => App Copy"
+rm -rf $HOME/app
 echo " => build_dir"
 rm -rf ${build_dir}
 echo " => .meteor"
