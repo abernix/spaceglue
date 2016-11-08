@@ -105,9 +105,9 @@ echo "=> Cleaning up"
 # cleanup
 echo "  => App Copy"
 rm -rf $HOME/app
-echo " => build_dir"
+echo "  => Build Directory"
 rm -rf ${build_dir}
-echo " => .meteor"
+echo "  => Meteor Installation"
 rm -rf ~/.meteor
 
 set +e
