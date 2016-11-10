@@ -1,17 +1,8 @@
 #!/bin/sh
 
-s3_bucket_name="abernix-meteord-tests"
-s3_bucket_region="us-west-2"
-
 watch_token="=====METEORD_TEST====="
 
 doalarm() { perl -e 'alarm shift; exec @ARGV' "$@"; }
-
-cver () {
-  echo $1 | perl -n \
-  -e '@ver = /^(?:[^\@]+\@)?([0-9]+)\.([0-9]+)(?:\.([0-9]+))?(?:\.([0-9]+))?/;' \
-  -e 'printf "%04s%04s%04s%04s", @ver;'
-}
 
 check_images_set () {
   : ${DOCKER_IMAGE_NAME_BASE?"has not been set."}
