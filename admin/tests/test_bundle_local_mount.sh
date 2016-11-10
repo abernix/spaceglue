@@ -23,10 +23,7 @@ clean
 
 echo "=> Testing Meteor Bundle Locally Mounted"
 
-meteor create "${base_app_name}" 2>&1 > /dev/null
-cd "${base_app_name}"
-add_watch_token
-add_binary_dependency
+create_meteor_test_app "${base_app_name}"
 
 test_root_url_hostname="localmount_app"
 meteor build \

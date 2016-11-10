@@ -4,6 +4,12 @@ watch_token="=====METEORD_TEST====="
 
 doalarm() { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
+cver () {
+  echo $1 | perl -n \
+  -e '@ver = /^(?:[^\@]+\@)?([0-9]+)\.([0-9]+)(?:\.([0-9]+))?(?:\.([0-9]+))?/;' \
+  -e 'printf "%04s%04s%04s%04s", @ver;'
+}
+
 check_images_set () {
   : ${DOCKER_IMAGE_NAME_BASE?"has not been set."}
   : ${DOCKER_IMAGE_NAME_BUILDDEPS?"has not been set."}
@@ -30,6 +36,30 @@ add_watch_token () {
   cat <<EOM >> $target_file
     require('meteor/meteor').Meteor.startup(() => console.log('$watch_token'));
 EOM
+}
+
+create_meteor_test_app () {
+  test_app_name=${1:-generic_app}
+  test_app_version=$2
+
+  if ! [ -z "${test_app_version}" ] && [ -n "${test_app_version}" ]; then
+    echo "=> Creating Test App for Meteor ${test_app_version:-}..."
+    test_app_release_argument="--release ${test_app_version}"
+  else
+    echo "=> Creating Test App with Default Meteor..."
+    test_app_release_argument=""
+  fi
+
+  meteor create ${test_app_release_argument} "${test_app_name}" 2>&1 > /dev/null
+  cd "${test_app_name}"
+  if [ -n "${test_app_version}" ] && \
+    [ $(cver "${test_app_version}") -ge $(cver "1.4.2.1") ]; then
+    echo "  => Installing 'babel-runtime' NPM..."
+    meteor npm install babel-runtime --save
+  fi
+  add_watch_token
+  add_binary_dependency
+  echo "  => Done creating test app!"
 }
 
 docker_logs_has () {

@@ -21,13 +21,8 @@ trap "echo Couldn't build test app for ${meteor_version} && exit 1" EXIT
 cd /tmp
 clean
 
-release_argument="--release ${meteor_version}"
 
-echo "=> Creating Meteor ${meteor_version} App"
-meteor create ${release_argument} "${base_app_name}" 2>&1 > /dev/null
-cd "${base_app_name}"
-add_watch_token
-add_binary_dependency
+create_meteor_test_app "${base_app_name}" "${meteor_version}"
 
 echo "  => Building Meteor ${meteor_version}"
 meteor build \
