@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 my_dir=`dirname $0`
-. ${my_dir}/lib.sh
+. ${my_dir}/test_lib.sh
 
 check_images_set
 

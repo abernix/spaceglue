@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 my_dir=`dirname $0`
-. ${my_dir}/tests/lib.sh
+. ${my_dir}/tests/test_lib.sh
 
 clean() {
   rm -rf "${base_app_name}" || true
