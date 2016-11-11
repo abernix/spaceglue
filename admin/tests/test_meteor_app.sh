@@ -20,8 +20,7 @@ meteor_version=$1
 meteor_version_label="${1:-default}"
 
 on_trap_exit () {
-  set +e
-  docker logs ${base_app_name}
+  docker_dump_logs ${base_app_name}
   echo Failed: "Meteor ${meteor_version_label} app build"
   exit 1
 }

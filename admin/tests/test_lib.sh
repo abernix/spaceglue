@@ -62,6 +62,11 @@ create_meteor_test_app () {
   echo "  => Done creating test app!"
 }
 
+docker_dump_logs () {
+  # Only prints logs if the container exists and has anything to print.
+  docker inspect $1 > /dev/null 2>&1 && docker logs $1 2>&1 || true
+}
+
 docker_logs_has () {
   echo "    => Watching Docker Logs on $1 for '${2}'"
   docker logs "$1" 2>&1 | grep "$2"
