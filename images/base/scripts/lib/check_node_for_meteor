@@ -25,7 +25,7 @@ function showAvailableVersionsLink() {
   console.log();
   console.log("and if you need support for this version, open an issue here:");
   console.log();
-  console.log("  https://github.com/abernix/meteord/issues");
+  console.log("  https://github.com/abernix/spaceglue/issues");
 }
 
 if (require("fs").existsSync(mapPath)) {
