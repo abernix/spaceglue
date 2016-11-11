@@ -53,7 +53,7 @@ create_meteor_test_app () {
   meteor create ${test_app_release_argument} "${test_app_name}" 2>&1 > /dev/null
   cd "${test_app_name}"
   if [ -z "${test_app_version}" ] || \
-    [ $(cver "${test_app_version}") -ge $(cver "1.4.2.1") ]; then
+    [ $(cver "${test_app_version}") -ge $(cver "1.4") ]; then
     echo "  => Installing 'babel-runtime' NPM..."
     meteor npm install babel-runtime --save
   fi
