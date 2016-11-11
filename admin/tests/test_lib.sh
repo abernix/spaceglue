@@ -52,6 +52,19 @@ create_meteor_test_app () {
 
   meteor create ${test_app_release_argument} "${test_app_name}" 2>&1 > /dev/null
   cd "${test_app_name}"
+
+  # This is a hack to make Meteor 1.4.2 work.  This should later be replaced
+  # with a message about deprecating 1.4.2 and ultimately, removed.
+  if ! [ -z "${test_app_version}" ] && \
+    [ $(cver "${test_app_version}") -eq $(cver "1.4.2") ]; then
+    echo "  => [hotfix] Pinning Meteor 'babel-runtime' for 1.4.2 release..."
+    perl -ni -e 'print unless /^(coffeescript|ecmascript|babel-runtime)\@/' \
+      .meteor/versions
+    echo "babel-runtime@0.1.13" >> .meteor/versions
+    echo "ecmascript@0.5.9" >> .meteor/versions
+    echo "coffeescript@1.11.1_2" >> .meteor/versions
+  fi
+
   if [ -z "${test_app_version}" ] || \
     [ $(cver "${test_app_version}") -ge $(cver "1.4") ]; then
     echo "  => Installing 'babel-runtime' NPM..."
