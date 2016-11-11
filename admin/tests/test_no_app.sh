@@ -14,7 +14,14 @@ clean() {
   docker rm -f "${base_app_name}" 2> /dev/null || true
 }
 
-trap "echo Failed: Missing Bundle Scenario && exit 1" EXIT
+on_trap_exit () {
+  set +e
+  docker logs ${base_app_name}
+  echo "Failed: Missing Bundle Scenario"
+  exit 1
+}
+
+trap 'on_trap_exit' EXIT
 
 cd /tmp
 clean
@@ -28,7 +35,9 @@ docker run -d \
 
 watch_docker_logs_for "${base_app_name}" "You don't have an meteor app"
 
+# Clear trap
 trap - EXIT
+
 clean
 
 set +e

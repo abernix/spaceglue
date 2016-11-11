@@ -14,7 +14,14 @@ clean() {
   docker rm -f "${base_app_name}" 2> /dev/null || true
 }
 
-trap "echo Failed: PhantomJS Support && exit 1" EXIT
+on_trap_exit () {
+  set +e
+  docker logs ${base_app_name}
+  echo "Failed: PhantomJS Support"
+  exit 1
+}
+
+trap 'on_trap_exit' EXIT
 
 clean
 
@@ -28,7 +35,9 @@ docker run  \
 
 watch_docker_logs_for "${base_app_name}" "GhostDriver"
 
+# Clear trap
 trap - EXIT
+
 clean
 
 set +e
