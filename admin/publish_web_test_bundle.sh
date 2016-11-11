@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 my_dir=`dirname $0`
+. ${my_dir}/lib.sh
 . ${my_dir}/tests/test_lib.sh
 
 clean() {
