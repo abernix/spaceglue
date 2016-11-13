@@ -23,4 +23,10 @@ module.exports = {
       "abernix/spaceglue:node-4.6.1"
     ],
   },
+  "METEOR@1.4.2.1": {
+    node: "4.6.1",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.6.1"
+    ],
+  },
 };
