@@ -28,7 +28,7 @@ else
   echo "=> Automatically balancing work with CI parallelism"
   our_work="$( \
     echo "${our_scripts}" | \
-    perl -MList::Util=shuffle -e 'print shuffle(<STDIN>);' \
+    perl -MList::Util=shuffle -e 'print shuffle(<STDIN>);' | \
     awk "NR % ${CIRCLE_NODE_TOTAL} == ${CIRCLE_NODE_INDEX}"
   )"
 fi
