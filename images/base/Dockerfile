@@ -4,7 +4,7 @@ MAINTAINER Jesse Rosenberger
 ADD apt-sources.list /etc/apt/sources.list
 
 ARG NODE_VERSION
-ENV NODE_VERSION ${NODE_VERSION:-4.6.1}
+ENV NODE_VERSION ${NODE_VERSION:-4.6.2}
 
 ENV NODESOURCE_DEBIAN_DIST jessie
 ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_4.x
