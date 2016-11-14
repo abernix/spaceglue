@@ -20,3 +20,18 @@ test:
   override:
     - ./admin/run_tests.sh:
         parallel: true
+
+deployment:
+  docker:
+    branch: /^node-[0-9.]+$/
+    commands:
+      - test -f $CIRCLE_ARTIFACTS/images
+      - docker images
+      - docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - >
+        cat $CIRCLE_ARTIFACTS/images |
+        xargs -t -n2 docker tag
+      - >
+        cat $CIRCLE_ARTIFACTS/images |
+        awk '{print $NF}' |
+        xargs -t -n1 docker push
