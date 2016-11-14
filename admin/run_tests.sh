@@ -8,7 +8,6 @@ root_dir="$my_dir/.."
 our_scripts="\
 ${my_dir}/tests/test_meteor_app.sh
 ${my_dir}/tests/test_bundle_local_mount.sh
-${my_dir}/tests/test_phantomjs.sh
 ${my_dir}/tests/test_no_app.sh
 "
 
