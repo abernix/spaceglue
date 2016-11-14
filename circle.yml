@@ -27,7 +27,7 @@ deployment:
     commands:
       - test -f $CIRCLE_ARTIFACTS/images
       - docker images
-      - docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - >
         cat $CIRCLE_ARTIFACTS/images |
         xargs -t -n2 docker tag
