@@ -10,6 +10,10 @@ name_base="${IMAGE_NAME}:node-${NODE_VERSION}"
 
 if ! [ -z "$TEST_BUILD" ]; then
   test_build_hash="-$(head -c 100 /dev/urandom | (md5sum || md5) | head -c10)"
+
+  if [ -d "${CIRCLE_ARTIFACTS}" ]; then
+    image_list_file="${CIRCLE_ARTIFACTS}/images"
+  fi
 else
   test_build_hash=""
 fi
@@ -37,12 +41,18 @@ build_image_derivative () {
     "${root_dir}/images/${derivative}/Dockerfile" > \
     "${derivative_dockerfile}"
 
-  derivative_tag="${base}-${derivative}${test_build_hash}"
+  derivative_tag_wo_test_hash="${base}-${derivative}"
+
+  derivative_tag="${derivative_tag_wo_test_hash}${test_build_hash}"
 
   docker build \
       -t "${derivative_tag}" \
       -f "${derivative_dockerfile}" \
       "${root_dir}/images/${derivative}" >&2
+
+  if [ -n "${image_list_file}" ]; then
+    echo "${derivative_tag} ${derivative_tag_wo_test_hash}" >> $image_list_file
+  fi
 
   echo "${derivative_tag}"
 
@@ -54,6 +64,10 @@ DOCKER_IMAGE_NAME_BASE="${name_base}${test_build_hash}"
 docker build \
     -t "${DOCKER_IMAGE_NAME_BASE}" \
     ${root_dir}/images/base
+
+if [ -n "${image_list_file}" ]; then
+  echo "${name_base}${test_build_hash} ${name_base}" >> $image_list_file
+fi
 
 DOCKER_IMAGE_NAME_BUILDDEPS="$(build_image_derivative ${name_base} builddeps)"
 DOCKER_IMAGE_NAME_ONBUILD="$(build_image_derivative ${name_base} onbuild)"
