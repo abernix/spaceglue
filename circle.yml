@@ -1,0 +1,16 @@
+machine:
+  node:
+    version: 4.6.1
+  services:
+    - docker
+
+dependencies:
+  override:
+    - if [ ! -f $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+    - sudo ln -s $HOME/.meteor/meteor /usr/bin/meteor
+  cache_directories:
+    - ../.meteor
+
+test:
+  override:
+    - cd tests && ./run_tests.sh
