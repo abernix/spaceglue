@@ -63,6 +63,7 @@ build_image_derivative () {
 DOCKER_IMAGE_NAME_BASE="${name_base}${test_build_hash}"
 docker build \
     -t "${DOCKER_IMAGE_NAME_BASE}" \
+    --build-arg NODE_VERSION=${NODE_VERSION} \
     ${root_dir}/images/base
 
 if [ -n "${image_list_file}" ]; then

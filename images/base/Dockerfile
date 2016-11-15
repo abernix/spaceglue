@@ -3,13 +3,21 @@ MAINTAINER Jesse Rosenberger
 
 ADD apt-sources.list /etc/apt/sources.list
 
+# To set the NODE_VERSION, use a --build-arg to `docker build`.
+# (But really, use build_it.sh and set NODE_VERSION in your environment first)
 ARG NODE_VERSION
-ENV NODE_VERSION ${NODE_VERSION:-4.6.2}
+
+# Do not continue unless NODE_VERSION is set.
+RUN if [ -z ${NODE_VERSION} ]; then \
+  echo "ERROR: Must set NODE_VERSION as a build argument!" && \
+  exit 1; \
+  fi
 
 ENV NODESOURCE_DEBIAN_DIST jessie
 ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_4.x
 ENV NODESOURCE_BASEPATH /pool/main/n/nodejs/
-ENV NODESOURCE_DEB_PATH nodejs_${NODE_VERSION}-1nodesource1~${NODESOURCE_DEBIAN_DIST}1_amd64.deb
+ENV NODESOURCE_DEB_PATH \
+  nodejs_${NODE_VERSION}-1nodesource1~${NODESOURCE_DEBIAN_DIST}1_amd64.deb
 
 ADD "${NODESOURCE_BASEURL}${NODESOURCE_BASEPATH}${NODESOURCE_DEB_PATH}" \
   /tmp/node.deb
