@@ -42,7 +42,7 @@ docker run -d \
     --name "${base_app_name}" \
     -e ROOT_URL=http://$test_root_url_hostname \
     -v "/tmp/${base_app_name}-bundle:/bundle" \
-    -p 63836:3000 \
+    -p 63836:80 \
     "${DOCKER_IMAGE_NAME_BUILDDEPS}"
 
 watch_docker_logs_for_token "${base_app_name}"

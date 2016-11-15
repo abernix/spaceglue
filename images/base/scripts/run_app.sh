@@ -60,9 +60,6 @@ if [ -n "$DELAY" ]; then
   sleep $DELAY
 fi
 
-# Honour already existing PORT setup
-export PORT=${PORT:-3000}
-
 echo "=> Executing NPM install within Bundle"
 (cd programs/server && npm install --unsafe-perm)
 
