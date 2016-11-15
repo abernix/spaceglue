@@ -42,6 +42,7 @@ export BUNDLE_URL="${s3_uri_base}/meteor-${meteor_version}.tar.gz"
 
 docker run -d \
     --name "${base_app_name}" \
+    --cap-add NET_BIND_SERVICE \
     -e ROOT_URL=http://$test_root_url_hostname \
     -e BUNDLE_URL \
     -p 63836:80 \

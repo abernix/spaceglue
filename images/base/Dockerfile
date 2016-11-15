@@ -65,6 +65,10 @@ RUN test -d /built_app && \
   chown -Rh node:node /built_app \
   || true
 
+# If docker doesn't run under aufs, this may fail.
+# Start your docker with --cap-add NET_BIND_SERVICE to bind to < 80
+RUN setcap 'cap_net_bind_service=+ep' /usr/bin/nodejs || true
+
 # Change to the node user for execution.
 USER node
 
