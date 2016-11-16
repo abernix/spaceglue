@@ -13,6 +13,8 @@ if ! [ -z "$TEST_BUILD" ]; then
 
   if [ -d "${CIRCLE_ARTIFACTS}" ]; then
     image_list_file="${CIRCLE_ARTIFACTS}/images"
+  else
+    image_list_file="/tmp/built_images"
   fi
 else
   test_build_hash=""
