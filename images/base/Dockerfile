@@ -43,7 +43,7 @@ RUN npm cache clear && apt-get autoremove -y && rm -rf \
 
 # Create a non-privileged user to do most all the work as.
 # We do this now to create the home directory.
-RUN groupadd -r node && useradd -r -g node node
+RUN groupadd -r node && useradd -r -m -g node node
 
 # Do the rest in the 'node' user home directory.
 WORKDIR /home/node
