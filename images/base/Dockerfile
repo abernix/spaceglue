@@ -41,12 +41,6 @@ RUN npm cache clear && apt-get autoremove -y && rm -rf \
   /var/lib/log \
   /tmp/*
 
-# For legacy reasons only, we run on port 80
-# This allows Meteor Up to keep doing --port THEIRPORT:80, which is hard-coded
-# by many implementations.  The actual server will run unprivileged though,
-# thanks to dockers default run cap of NET_BIND_SERVICE=true
-EXPOSE 80
-
 # Create a non-privileged user to do most all the work as.
 # We do this now to create the home directory.
 RUN groupadd -r node && useradd -r -g node node
@@ -65,9 +59,9 @@ RUN test -d /built_app && \
   chown -Rh node:node /built_app \
   || true
 
-# If docker doesn't run under aufs, this may fail.
-# Start your docker with --cap-add NET_BIND_SERVICE to bind to < 80
-RUN setcap 'cap_net_bind_service=+ep' /usr/bin/nodejs || true
+# Run on port 3000 and expose this so node knows this when we launch.
+ENV PORT 3000
+EXPOSE ${PORT}
 
 # Change to the node user for execution.
 USER node

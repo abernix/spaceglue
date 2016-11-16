@@ -45,7 +45,7 @@ docker run -d \
     --cap-add NET_BIND_SERVICE \
     -e ROOT_URL=http://$test_root_url_hostname \
     -e BUNDLE_URL \
-    -p 63836:80 \
+    -p 63836:3000 \
     "${DOCKER_IMAGE_NAME_BUILDDEPS}"
 
 watch_docker_logs_for_token "${base_app_name}"
