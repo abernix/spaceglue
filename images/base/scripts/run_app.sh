@@ -6,12 +6,12 @@ path=`pwd`
 
 if [ -d /bundle ]; then
   echo "=> Found /bundle"
-  tar -xvz -C $HOME --no-same-owner --file /bundle/*.tar.gz
+  tar -xz -C $HOME --no-same-owner --file /bundle/*.tar.gz
   cd $HOME/bundle
 elif [ -d $HOME/bundle ]; then
   echo "=> Found $HOME/bundle"
   cd $HOME/bundle
-  tar -xvz --no-same-owner --file $HOME/bundle/*.tar.gz
+  tar -xz --no-same-owner --file $HOME/bundle/*.tar.gz
   cd bundle/
 elif [ -n "$BUNDLE_URL" ]; then
   echo "=> BUNDLE_URL is set"
