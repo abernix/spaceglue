@@ -1,9 +1,127 @@
 [![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/master.svg?style=svg)](https://circleci.com/gh/abernix/meteord/tree/master)
 # SpaceGlue
 
-Another Docker image for Meteor
+A Docker image for Meteor.  Intended to work independently but also as a drop-in image for [Kadira's Meteor Up](https://github.com/kadirahq/meteor-up) (not the `meteorhacks` version or "MupX" though!)
 
-#### Low-Memory Environment
+## Supported tags
+
+Please see the explanation of the [tag variations](#tag-variations) (e.g. `-builddeps`, `-onbuild`) below.
+
+### Node 4 (Meteor 1.4+)
+
+#### Node 4.6.2
+
+* `node-4`, `node-4.6.2`
+* `node-4-builddeps`, `node-4.6.2-builddeps`
+* `node-4-onbuild`, `node-4.6.2-onbuild`
+
+## Usage
+
+### Standalone
+
+0. Add a `Dockerfile` to the root of your Meteor app that uses this image:
+
+        FROM abernix/spaceglue:node-4-onbuild
+
+0. `docker build .`
+
+0. Run the new image!
+
+    You can run it however you would normally run a Docker image.  Maybe on a Container service or just using `docker run` – how ever you'd like.
+
+    Be sure to set any environment variables that Meteor would normally need, like:
+
+    * `MONGO_URL`
+    * `ROOT_URL`
+    * `METEOR_SETTINGS`
+
+### Meteor Up ([website]([Meteor Up](https://github.com/kadirahq/meteor-up)))
+
+> Disclaimer: Currently this won't work.  It's waiting for a PR to merge with Kadira
+
+This will only work with the newest `mup` which is the one provided in the `kadirahq` organization.  If your project uses `mup.json`, you are using an old version and should update to one that uses the one which uses the `mup.js` format.
+
+**It will not work with the original `meteorhacks` Mup, nor will it work with the MupX branch!**
+
+0. Set two `docker` settings in your `mup.js`.
+
+    * `image: 'abernix/spaceglue:node-4-onbuild'`
+    * `imagePort: 3000`
+
+    If you don't already have a `docker` setting, you need to add it in the `meteor` object:
+
+    ```js
+    module.exports = {
+      servers: {
+        // existing server stuff here.
+      },
+
+      meteor: {
+        name: 'app', // your app may vary
+        path: '../app',
+
+        // This is the section you need to add/modify
+        docker: {
+          image: 'abernix/spaceglue:node-4-builddeps',
+          imagePort: 3000,
+        },
+
+        // other settings, which may have already been there!
+      },
+
+      // more settings, like mongo...maybe? depends if it was already there!
+      mongo: {
+        // see docs.
+      },
+    };
+    ```
+
+0. `mup deploy`
+
+## Tag Variations
+
+There are three variations of each major Node-based release.
+
+* "Base" (No tag suffix)
+* `-builddeps`
+* `-onbuild`
+
+### Base (No tag suffix)
+You probably can't use this.  This image is suitable if you have NO binary dependencies in your project (honestly, you probably have some) OR if you're running your `meteor build` on the same architecture as this image, meaning no recompilation of said binary dependencies will be necessary.  This means that you need to be running Debian Jessie 64-bit, but you might get away with others.
+
+This can be used with [Meteor Up](https://github.com/kadirahq/meteor-up), but only if the above requirement is met.  You probably want the next image though.
+
+### with Build Dependencies `-builddeps`
+This image comes with the build dependencies needed to recompile your binary dependencies.  This is necessary when you are running `meteor build` on one platform/architecture, but deploying to another.
+
+If you're using [Meteor Up](https://github.com/kadirahq/meteor-up) this is probably the image you want.
+
+### Built in Docker `-onbuild`
+If your intention is to build a Docker image straight out of your repo, then this is the image for you.  You can basically create a `Dockerfile` with `FROM abernix/spaceglue:node-4-onbuild` and run `docker build .` and you'll get an image that is ready to deploy.
+
+## Advanced Configuration Environment Variables
+
+### With Docker
+
+To set these when using `docker run`, pass along a `-e NAME=VALUE` argument for the setting you'd like to use.
+
+### With Meteor Up
+
+To set these when using Meteor Up, add an enter to the `env` section of the `meteor` object in your `mup.js`.  This will be where you already have your `ROOT_URL`, `MONGO_URL`, etc.:
+
+```js
+  env: {
+    ROOT_URL: 'http://app.com',
+    // Add it here!
+    NAME: 'VALUE',
+  },
+```
+
+#### `NODE_OPTIONS`
+
+This can be used for various settings that will be passed to `node`.  Some are outlined below, but run: `node --v8-options` or `node -h` to see all possible options.  These might include:
+
+##### Low-Memory Environment
 
 If your app is running in low memory environment, the default garbage collection settings of node can lead to out-of-memory crashes even when there are no leaks.
 To fix that and for other diagnosis purposes, you can expose `NODE_OPTIONS` as environment variable and pass whatever is supported.
