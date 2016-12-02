@@ -115,5 +115,7 @@ echo "  => Build Directory"
 rm -rf ${build_dir}
 echo "  => Meteor Installation"
 rm -rf ~/.meteor
+echo "  => Meteor Temp Files"
+rm -rf /tmp/mt-*
 
 set +e
