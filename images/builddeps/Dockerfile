@@ -11,6 +11,6 @@ RUN apt-get update && apt-get -f install -y && apt-get install -y --no-install-r
     python \
   && rm -rf /var/lib/apt/lists/*
 
-RUN ["npm", "install", "--global", "node-gyp"]
+RUN ["npm", "install", "--global", "node-gyp", "node-pre-gyp"]
 
 USER node

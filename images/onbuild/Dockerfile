@@ -7,7 +7,7 @@ ONBUILD WORKDIR /home/node
 COPY scripts .
 RUN chown -R node:node /home/node/
 
-RUN ["npm", "install", "--global", "node-gyp"]
+RUN ["npm", "install", "--global", "node-gyp", "node-pre-gyp"]
 USER node
 
 ONBUILD USER root
