@@ -11,9 +11,9 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 
 #### Node 4.7.0
 
-* `node-4`, `node-4.6.2`
-* `node-4-builddeps`, `node-4.6.2-builddeps`
-* `node-4-onbuild`, `node-4.6.2-onbuild`
+* `node-4`, `node-4.7.0`
+* `node-4-builddeps`, `node-4.7.0-builddeps`
+* `node-4-onbuild`, `node-4.7.0-onbuild`
 
 #### Node 4.6.2
 
