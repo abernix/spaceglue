@@ -55,8 +55,6 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 
 ### Meteor Up ([website]([Meteor Up](https://github.com/kadirahq/meteor-up)))
 
-> Disclaimer: Currently this won't work.  It's waiting for a PR to merge with Kadira
-
 This will only work with the newest `mup` which is the one provided in the `kadirahq` organization.  If your project uses `mup.json`, you are using an old version and should update to one that uses the one which uses the `mup.js` format.
 
 **It will not work with the original `meteorhacks` Mup, nor will it work with the MupX branch!**
