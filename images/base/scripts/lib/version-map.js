@@ -92,6 +92,49 @@ module.exports = {
     node: "4.8.0",
     recommendedDockerImages: [
       "abernix/spaceglue:node-4.8.0",
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.4.4": {
+    node: "4.8.1",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.4.4.1": {
+    node: "4.8.1",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.4.4.2": {
+    node: "4.8.2",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.4.4.3": {
+    node: "4.8.4",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.4.4.4": {
+    node: "4.8.4",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.5": {
+    node: "4.8.4",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
+    ],
+  },
+  "METEOR@1.5.1": {
+    node: "4.8.4",
+    recommendedDockerImages: [
+      "abernix/spaceglue:node-4.8.4",
     ],
   },
 };
