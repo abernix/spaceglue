@@ -14,7 +14,7 @@ RUN if [ -z ${NODE_VERSION} ]; then \
   fi
 
 ENV NODESOURCE_DEBIAN_DIST jessie
-ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_4.x
+ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_8.x
 ENV NODESOURCE_BASEPATH /pool/main/n/nodejs/
 ENV NODESOURCE_DEB_PATH \
   nodejs_${NODE_VERSION}-1nodesource1~${NODESOURCE_DEBIAN_DIST}1_amd64.deb
