@@ -9,11 +9,11 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 
 ### Node 4 (Meteor 1.4+)
 
-#### Node 4.8.3
+#### Node 4.8.4
 
-* `node-4`, `node-4.8.3`
-* `node-4-builddeps`, `node-4.8.3-builddeps`
-* `node-4-onbuild`, `node-4.8.3-onbuild`
+* `node-4`, `node-4.8.4`
+* `node-4-builddeps`, `node-4.8.4-builddeps`
+* `node-4-onbuild`, `node-4.8.4-onbuild`
 
 #### Node 4.8.0
 
