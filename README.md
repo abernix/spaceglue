@@ -7,7 +7,15 @@ A Docker image for Meteor.  Intended to work independently but also as a drop-in
 
 Please see the explanation of the [tag variations](#tag-variations) (e.g. `-builddeps`, `-onbuild`) below.
 
-### Node 4 (Meteor 1.4+)
+### Node 8 (Meteor 1.6+) ***BETA***
+
+#### Node 8.4.0
+
+* `node-8`, `node-8.4.0`
+* `node-8-builddeps`, `node-8.4.0-builddeps`
+* `node-8-onbuild`, `node-8.4.0-onbuild`
+
+### Node 4 (Meteor 1.4, 1.5)
 
 #### Node 4.8.4
 
