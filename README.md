@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/master.svg?style=svg)](https://circleci.com/gh/abernix/spaceglue/tree/master)
+[![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/node-8.4.0.svg?style=svg)](https://circleci.com/gh/abernix/spaceglue/tree/node-8.4.0)
 # SpaceGlue
 
 A Docker image for Meteor.  Intended to work independently but also as a drop-in image for [Zodern's (_previously Kardira's_) Meteor Up](https://github.com/zodern/meteor-up) (not the `meteorhacks` version or "MupX" though!)
