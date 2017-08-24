@@ -3,6 +3,8 @@
 
 A Docker image for Meteor.  Intended to work independently but also as a drop-in image for [Zodern's (_previously Kardira's_) Meteor Up](https://github.com/zodern/meteor-up) (not the `meteorhacks` version or "MupX" though!)
 
+Due to Docker caching layers, and an aggressive attempt for ease-of-use, the resulting images are **offensively large**.  Maybe not the most offensive you've ever seen, but certainly far from a "*micro*service" image.   This SpaceGlue branch was ultimately an attempt to have an easier to maintain structure for the original [MeteorD image](https://github.com/kadirahq/meteord) so I could more rapidly release updates to [Node.js](https://nodejs.org) (with auto-CI builds, tests, pushes, etc.).  It accomplished that.  However, you should consider other, more efficient Docker images if it's a concern to you or look into something like [docker-squash](https://github.com/jwilder/docker-squash) (maybe? dunno.).  It might not be a huge deal if you have a fast upstream (to upload new images) and your container host can quickly move around larger images (it probably can) and you don't get charged too much for storing the images (it's possible).
+
 ## Supported tags
 
 Please see the explanation of the [tag variations](#tag-variations) (e.g. `-builddeps`, `-onbuild`) below.
