@@ -63,7 +63,7 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 
 ### Meteor Up ([website](https://github.com/zodern/meteor-up))
 
-This will only work with the newest `mup` which is the one provided in the `zodern` organization.  If your project uses `mup.json`, you are using an old version and should update to one that uses the one which uses the `mup.js` format.
+This will only work with the newest `mup` which is the one provided in the `zodern` GitHub organization.  If your project uses `mup.json` (note the `.json` extension!), you are using an old version and should update to one that uses the one which uses the `mup.js` format.
 
 **It will not work with the original `meteorhacks` Mup, nor will it work with the MupX branch!**
 
