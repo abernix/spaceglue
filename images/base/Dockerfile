@@ -28,7 +28,7 @@ RUN (dpkg -i /tmp/node.deb 2> /dev/null || true) && \
 RUN apt-get update && apt-get -f install -y \
   && rm -rf /var/lib/apt/lists/*
 
-RUN ["npm", "install", "--global", "npm@4"]
+RUN ["npm", "install", "--global", "npm@5"]
 
 # Clean up the packages, and our mess.
 RUN npm cache clear && apt-get autoremove -y && rm -rf \
