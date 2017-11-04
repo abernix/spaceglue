@@ -31,7 +31,7 @@ RUN apt-get update && apt-get -f install -y \
 RUN ["npm", "install", "--global", "npm@5"]
 
 # Clean up the packages, and our mess.
-RUN npm cache clear && apt-get autoremove -y && rm -rf \
+RUN npm cache clear --force && apt-get autoremove -y && rm -rf \
   /usr/share/doc \
   /usr/share/doc-base \
   /usr/share/man \
