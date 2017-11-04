@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/node-8.4.0.svg?style=svg)](https://circleci.com/gh/abernix/spaceglue/tree/node-8.4.0)
+[![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/node-8.9.0.svg?style=svg)](https://circleci.com/gh/abernix/spaceglue/tree/node-8.9.0)
 # SpaceGlue
 
 A Docker image for Meteor.  Intended to work independently but also as a drop-in image for [Zodern's (_previously Kardira's_) Meteor Up](https://github.com/zodern/meteor-up) (not the `meteorhacks` version or "MupX" though!)
@@ -9,13 +9,13 @@ Due to Docker caching layers, and an aggressive attempt for ease-of-use, the res
 
 Please see the explanation of the [tag variations](#tag-variations) (e.g. `-builddeps`, `-onbuild`) below.
 
-### Node 8 (Meteor 1.6+) ***BETA***
+### Node 8 (Meteor 1.6+)
 
-#### Node 8.4.0
+#### Node 8.9.0
 
-* `node-8`, `node-8.4.0`
-* `node-8-builddeps`, `node-8.4.0-builddeps`
-* `node-8-onbuild`, `node-8.4.0-onbuild`
+* `node-8`, `node-8.9.0`
+* `node-8-builddeps`, `node-8.9.0-builddeps`
+* `node-8-onbuild`, `node-8.9.0-onbuild`
 
 ### Node 4 (Meteor 1.4, 1.5)
 
@@ -55,7 +55,7 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 
 0. Add a `Dockerfile` to the root of your Meteor app that uses this image:
 
-        FROM abernix/spaceglue:node-4-onbuild
+        FROM abernix/spaceglue:node-8-onbuild
 
 0. `docker build .`
 
