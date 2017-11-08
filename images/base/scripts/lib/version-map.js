@@ -138,9 +138,9 @@ module.exports = {
     ],
   },
   "METEOR@1.6": {
-    node: "8.9.0",
+    node: "8.9.1",
     recommendedDockerImages: [
-      "abernix/spaceglue:node-8.9.0",
+      "abernix/spaceglue:node-8.9.1",
     ],
   },
 };
