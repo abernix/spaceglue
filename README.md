@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/master.svg?style=svg)](https://circleci.com/gh/abernix/spaceglue/tree/master)
+[![Circle CI](https://circleci.com/gh/abernix/spaceglue/tree/node-4.8.6.svg?style=svg)](https://circleci.com/gh/abernix/spaceglue/tree/node-4.8.6)
 # SpaceGlue
 
 A Docker image for Meteor.  Intended to work independently but also as a drop-in image for [Kadira's Meteor Up](https://github.com/kadirahq/meteor-up) (not the `meteorhacks` version or "MupX" though!)
@@ -9,11 +9,17 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 
 ### Node 4 (Meteor 1.4+)
 
+#### Node 4.8.6
+
+* `node-4`, `node-4.8.6`
+* `node-4-builddeps`, `node-4.8.6-builddeps`
+* `node-4-onbuild`, `node-4.8.6-onbuild`
+
 #### Node 4.8.4
 
-* `node-4`, `node-4.8.4`
-* `node-4-builddeps`, `node-4.8.4-builddeps`
-* `node-4-onbuild`, `node-4.8.4-onbuild`
+* `node-4.8.4`
+* `node-4.8.4-builddeps`
+* `node-4.8.4-onbuild`
 
 #### Node 4.8.0
 
