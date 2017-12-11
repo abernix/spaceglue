@@ -13,8 +13,7 @@ RUN if [ -z ${NODE_VERSION} ]; then \
   exit 1; \
   fi
 
-ENV NODESOURCE_DEBIAN_DIST jessie
-ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_4.x
+ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_8.x
 ENV NODESOURCE_BASEPATH /pool/main/n/nodejs/
 ENV NODESOURCE_DEB_PATH \
   nodejs_${NODE_VERSION}-1nodesource1_amd64.deb
@@ -28,10 +27,10 @@ RUN (dpkg -i /tmp/node.deb 2> /dev/null || true) && \
 RUN apt-get update && apt-get -f install -y \
   && rm -rf /var/lib/apt/lists/*
 
-RUN ["npm", "install", "--global", "npm@4"]
+RUN ["npm", "install", "--global", "npm@5"]
 
 # Clean up the packages, and our mess.
-RUN npm cache clear && apt-get autoremove -y && rm -rf \
+RUN npm cache clear --force && apt-get autoremove -y && rm -rf \
   /usr/share/doc \
   /usr/share/doc-base \
   /usr/share/man \
