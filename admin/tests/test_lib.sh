@@ -47,7 +47,7 @@ create_meteor_test_app () {
     test_app_release_argument="--release ${test_app_version}"
   else
     echo "=> Creating Test App with Default Meteor..."
-    test_app_release_argument="--release 1.5.3"
+    test_app_release_argument="--release 1.5.4.1"
   fi
 
   meteor create ${test_app_release_argument} "${test_app_name}" 2>&1 > /dev/null
