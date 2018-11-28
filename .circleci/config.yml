@@ -1,8 +1,8 @@
 version: 2
 jobs:
-  docker:
-    - image: circleci/buildpack-deps:trusty
   build:
+    docker:
+      - image: circleci/buildpack-deps:trusty
     environment:
       NODE_VERSION: 8.14.0
       METEOR_PRETTY_OUTPUT: 0
