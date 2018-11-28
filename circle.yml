@@ -1,11 +1,11 @@
 ---
 machine:
   node:
-    version: 8.11.2
+    version: 8.14.0
   services:
     - docker
   environment:
-    NODE_VERSION: 8.11.2
+    NODE_VERSION: 8.14.0
     METEOR_PRETTY_OUTPUT: 0
     METEOR_WAREHOUSE_URLBASE: https://d3fm2vapipm3k9.cloudfront.net
 

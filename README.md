@@ -9,13 +9,13 @@ Due to Docker caching layers, and an aggressive attempt for ease-of-use, the res
 
 Please see the explanation of the [tag variations](#tag-variations) (e.g. `-builddeps`, `-onbuild`) below.
 
-### Node 8 (Meteor 1.6, 1.7+)
+### Node 8 (Meteor 1.6, 1.7, 1.8+)
 
-#### Node 8.11.2
+#### Node 8.14.0
 
-* `node-8`, `node-8.11.2`
-* `node-8-builddeps`, `node-8.11.2-builddeps`
-* `node-8-onbuild`, `node-8.11.2-onbuild`
+* `node-8`, `node-8.14.0`
+* `node-8-builddeps`, `node-8.14.0-builddeps`
+* `node-8-onbuild`, `node-8.14.0-onbuild`
 
 ### Node 4 (Meteor 1.4, 1.5)
 
