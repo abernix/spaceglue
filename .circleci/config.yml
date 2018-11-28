@@ -13,7 +13,7 @@ jobs:
     - run: test -f $HOME/.meteor/meteor || (curl https://install.meteor.com | sh)
     - run: pwd
     - run: echo $PATH
-    - run: ln -s $HOME/.meteor/meteor /usr/local/bin/meteor
+    - run: test -e /usr/local/bin/meteor || ln -s $HOME/.meteor/meteor /usr/local/bin/meteor
     # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
