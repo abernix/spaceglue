@@ -11,6 +11,8 @@ jobs:
     - checkout
     - setup_remote_docker
     - run: test -f $HOME/.meteor/meteor || (curl https://install.meteor.com | sh)
+    - run: pwd
+    - run: echo $PATH
     - run: sudo ln -s $HOME/.meteor/meteor /usr/bin/meteor
     # Save dependency cache
     - save_cache:
