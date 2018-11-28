@@ -17,13 +17,9 @@ Please see the explanation of the [tag variations](#tag-variations) (e.g. `-buil
 * `node-8-builddeps`, `node-8.14.0-builddeps`
 * `node-8-onbuild`, `node-8.14.0-onbuild`
 
-### Node 4 (Meteor 1.4, 1.5)
+### Older versions
 
-#### Node 4.8.7
-
-* `node-4`, `node-4.8.7`
-* `node-4-builddeps`, `node-4.8.7-builddeps`
-* `node-4-onbuild`, `node-4.8.7-onbuild`
+> Older versions are no longer under LTS support by the Node.js foundation.  They may be available, but you should check the tags and their usage is strongly discouraged.  Meteor is easy to upgrade, and you should follow the documentation at https://docs.meteor.com to find the appropriate upgrade guide.
 
 ## Usage
 
