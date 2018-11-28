@@ -20,6 +20,7 @@ jobs:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
         - ~/.meteor
+    - run: docker images
     - run: ./admin/run_tests.sh
 
 workflows:
