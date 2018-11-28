@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/buildpack-deps:trusty
+      - image: node:8.14.0
     environment:
       NODE_VERSION: 8.14.0
       METEOR_PRETTY_OUTPUT: 0
@@ -10,7 +10,6 @@ jobs:
     steps:
     - checkout
     - setup_remote_docker
-    - run: nvm install $NODE_VERSION && nvm alias default $NODE_VERSION
     - run: test -f $HOME/.meteor/meteor || (curl https://install.meteor.com | sh)
     - run: sudo ln -s $HOME/.meteor/meteor /usr/bin/meteor
     # Save dependency cache
