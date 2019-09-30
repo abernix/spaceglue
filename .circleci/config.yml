@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: node:8.16.1
+      - image: circleci/node:8.16.1
     environment:
       NODE_VERSION: 8.16.1
       METEOR_PRETTY_OUTPUT: 0
