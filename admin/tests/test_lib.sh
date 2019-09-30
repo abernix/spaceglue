@@ -89,7 +89,7 @@ docker_logs_has_bcrypt_token () {
   echo "    => Checking Docker Logs for Bcrypt token"
   docker logs "$1" 2>&1 | \
     grep -E --quiet \
-      '^bcrypt:::\$2[ay]?\$[0-9]{1,2}\$[^\$]{53}:::$' 2>&1 > /dev/null
+      '^bcrypt:::\$2[ayb]?\$[0-9]{1,2}\$[^\$]{53}:::$' 2>&1 > /dev/null
 }
 
 watch_docker_logs_for () {
