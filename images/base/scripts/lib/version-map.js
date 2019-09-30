@@ -17,10 +17,10 @@ module.exports = {
       "abernix/spaceglue:node-8.16.1",
     ],
   },
-  "METEOR@1.8.1": {
-    node: "8.16.1",
+  "METEOR@1.9-beta.1": {
+    node: "12.10.0",
     recommendedDockerImages: [
-      "abernix/spaceglue:node-8.16.1",
+      "abernix/spaceglue:node-12.10.0",
     ],
   },
 };

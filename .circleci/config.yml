@@ -3,9 +3,9 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: circleci/node:8.16.1
+      - image: circleci/node:12.10.0
     environment:
-      NODE_VERSION: 8.16.1
+      NODE_VERSION: 12.10.0
       METEOR_PRETTY_OUTPUT: 0
       METEOR_WAREHOUSE_URLBASE: https://d3fm2vapipm3k9.cloudfront.net
     steps:
