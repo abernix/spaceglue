@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -x
 my_dir=`dirname $0`
 admin_dir="$my_dir/.."
 
