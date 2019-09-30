@@ -25,8 +25,11 @@ RUN (dpkg -i /tmp/node.deb 2> /dev/null || true) && \
   rm /tmp/node.deb
 
 RUN apt-get update && apt-get -f install -y \
+  && apt-get install -y npm \
   && rm -rf /var/lib/apt/lists/*
 
+# The version just installed would have been not the latest, and very likely
+# could have been pre-6.x.  Let's update to 6.x.
 RUN ["npm", "install", "--global", "npm@6"]
 
 # Clean up the packages, and our mess.
