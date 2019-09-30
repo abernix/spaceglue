@@ -16,26 +16,30 @@ check_images_set () {
   : ${DOCKER_IMAGE_NAME_ONBUILD?"has not been set."}
 }
 
+main_file="server/main.js"
+
 add_binary_dependency () {
-  target_file=${1:-"server/main.js"}
-  echo "    => Adding binary dependency to ${target_file}"
+  target_file=${1:-"binary_dep.js"}
+  echo "    => Adding binary dependency to server/${target_file}"
   echo "      => Adding 'npm-bcrypt' package to app"
   meteor add npm-bcrypt 2>&1 > /dev/null
   echo "      => Installing 'bcrypt' NPM (with binary node bindings)"
   meteor npm install bcrypt --save 2>&1 > /dev/null
-  cat <<EOM >> $target_file
-    require('meteor/meteor').Meteor.startup(() => {
-      console.log('bcrypt:::' + require('bcrypt').hashSync("asdf", 10) + ':::');
-    });
+  cat <<EOM >> "server/$target_file"
+  require('meteor/meteor').Meteor.startup(() => {
+    console.log('bcrypt:::' + require('bcrypt').hashSync("asdf", 10) + ':::');
+  });
 EOM
+  echo "require('./${target_file}')" >> "${main_file}";
 }
 
 add_watch_token () {
-  target_file=${1:-"server/__11_first.js"}
-  echo "    => Adding watch token to ${target_file}..."
-  cat <<EOM >> $target_file
-    require('meteor/meteor').Meteor.startup(() => console.log('$watch_token'));
+  target_file=${1:-"watch_token.js"}
+  echo "    => Adding watch token to server/${target_file}..."
+  cat <<EOM >> "server/$target_file"
+  require('meteor/meteor').Meteor.startup(() => console.log('$watch_token'));
 EOM
+  echo "require('./${target_file}')" >> "${main_file}";
 }
 
 create_meteor_test_app () {
