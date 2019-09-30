@@ -13,19 +13,10 @@ RUN if [ -z ${NODE_VERSION} ]; then \
   exit 1; \
   fi
 
-ENV NODESOURCE_BASEURL https://deb.nodesource.com/node_8.x
-ENV NODESOURCE_BASEPATH /pool/main/n/nodejs/
-ENV NODESOURCE_DEB_PATH \
-  nodejs_${NODE_VERSION}-1nodesource1_amd64.deb
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
-ADD "${NODESOURCE_BASEURL}${NODESOURCE_BASEPATH}${NODESOURCE_DEB_PATH}" \
-  /tmp/node.deb
-
-RUN (dpkg -i /tmp/node.deb 2> /dev/null || true) && \
-  rm /tmp/node.deb
-
-RUN apt-get update && apt-get -f install -y \
-  && apt-get install -y npm \
+RUN apt-get update && apt-get install -y \
+  && apt-get install -y nodejs=${NODE_VERSION}-1nodesource1 \
   && rm -rf /var/lib/apt/lists/*
 
 # The version just installed would have been not the latest, and very likely
